@@ -8,4 +8,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/docs/{version}/{page?}', 'DocumentationController@show');
+Route::get('/{version}/{page?}', 'DocumentationController@show');

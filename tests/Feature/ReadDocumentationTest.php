@@ -11,7 +11,7 @@ class ReadDocumentationTest extends TestCase
     /** @test */
     public function it_assumes_the_latest_documentation_version()
     {
-        $this->get('docs/some-page')->assertRedirect('/docs/' . DEFAULT_VERSION . '/some-page');
+        $this->get('/some-page')->assertRedirect('/docs/' . DEFAULT_VERSION . '/some-page');
     }
 
     /** @test */
@@ -23,7 +23,7 @@ class ReadDocumentationTest extends TestCase
             );
         }));
 
-        $this->get('docs/'.DEFAULT_VERSION.'/stub')
+        $this->get('/'.DEFAULT_VERSION.'/stub')
             ->assertSee('<h1>Stub</h1>')
             ->assertSee('<p>Paragraph</p>');
     }
@@ -31,6 +31,6 @@ class ReadDocumentationTest extends TestCase
     /** @test */
     public function it_aborts_if_the_requested_documentation_page_is_not_fonud()
     {
-        $this->get('docs/'.DEFAULT_VERSION.'/does-not-exists')->assertNotFound();
+        $this->get('/'.DEFAULT_VERSION.'/does-not-exists')->assertNotFound();
     }
 }
