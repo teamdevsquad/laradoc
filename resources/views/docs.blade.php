@@ -2,7 +2,7 @@
 
 @section('sidebar')
     <section class="sidebar">
-        <docs-menu></docs-menu>
+        <docs-menu page="{{ $page }}"></docs-menu>
     </section>
 @endsection
 

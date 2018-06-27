@@ -10417,6 +10417,10 @@ a.text-dark:focus {
           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
+[v-cloak] {
+  display: none;
+}
+
 .docs-wrapper .sidebar {
   border-right: 1px solid #f0f2f1;
   width: 250px;
@@ -10444,6 +10448,19 @@ a.text-dark:focus {
 
 .docs-wrapper .sidebar h2 + ul {
   display: none;
+  list-style: none;
+  margin: .5rem 0 0;
+  padding: 0 0 0 .75rem;
+  font-size: 13px;
+}
+
+.docs-wrapper .sidebar h2 + ul a {
+  line-height: 30px;
+  text-decoration: none;
+}
+
+.docs-wrapper .sidebar h2.is-active + ul {
+  display: block;
 }
 
 .docs-wrapper .sidebar h2.is-active:after {

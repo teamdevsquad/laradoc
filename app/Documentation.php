@@ -2,9 +2,9 @@
 
 namespace App;
 
-use Exception;
 use File;
 use ParsedownExtra;
+use App\Exceptions\DocumentationException;
 
 class Documentation
 {
@@ -17,7 +17,7 @@ class Documentation
             );
         }
         
-        throw new Exception('The requested documentation page was not found');
+        throw new DocumentationException('The requested documentation page was not found');
     }
 
     public function markdownPath($version, $page)

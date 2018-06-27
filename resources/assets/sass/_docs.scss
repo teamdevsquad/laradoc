@@ -1,10 +1,13 @@
+[v-cloak] {
+    display: none;
+}
+
 .docs-wrapper {
     .sidebar {
         border-right: 1px solid #f0f2f1;
         width: 250px;
         padding: 35px;
         float: left;
-
         ul {
             list-style: none;
             padding: 0;
@@ -19,19 +22,26 @@
             transition: color .1s linear;
             border-bottom: 1px dashed rgba(0, 0, 0, .1);
             position: relative;
-            
             &+ul {
                 display: none;
+                list-style: none;
+                margin: .5rem 0 0;
+                padding: 0 0 0 .75rem;
+                font-size: 13px;
+                a {
+                    line-height: 30px;
+                    text-decoration: none;
+                }
             }
-            
+            &.is-active+ul {
+                display: block;
+            }
             &.is-active:after {
                 transform: rotate(90deg);
             }
-
             &:hover {
                 color: #3a76c1;
             }
-
             &:after {
                 content: "";
                 position: absolute;

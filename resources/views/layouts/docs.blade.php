@@ -11,10 +11,10 @@
     <link rel="stylesheet" href="{{ mix('css/app.css') }}" type="text/css">
 </head>
 <body>
-    <div id="app">
+    <div id="app" v-cloak>
         <header>
             <nav class="navbar navbar-dark bg-primary">
-                <a class="navbar-brand" href="#">
+                <a class="navbar-brand" href="/">
                     <img src="{{ asset('/img/logo.png') }}" class="d-inline-block align-top" alt="" />
                 </a>
             </nav>

@@ -5,7 +5,7 @@ if (!defined('DEFAULT_VERSION')) {
 }
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/introduction');
 });
 
 Route::get('/{version}/{page?}', 'DocumentationController@show');

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Facades\App\Documentation;
+use App\Exceptions\DocumentationException;
 
 class DocumentationController extends Controller
 {
@@ -15,9 +16,10 @@ class DocumentationController extends Controller
         
         try {
             return view('docs', [
-                'content' => Documentation::get($version, $page)
+                'content' => Documentation::get($version, $page),
+                'page'    => $page
             ]);
-        } catch (\Exception $e) {
+        } catch (DocumentationException $e) {
             abort(404, 'The documentation page was not found!');
         }
     }
