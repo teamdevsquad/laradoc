@@ -10,7 +10,7 @@ class DocumentationController extends Controller
     public function show($version, $page = '')
     {
         if (! in_array($version, Documentation::versions())) {
-            return redirect('docs/' . DEFAULT_VERSION . '/' . $version);
+            return redirect('/' . DEFAULT_VERSION . '/' . $version);
         }
         
         try {

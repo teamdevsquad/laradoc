@@ -4,7 +4,7 @@ namespace App;
 
 use Exception;
 use File;
-use Parsedown;
+use ParsedownExtra;
 
 class Documentation
 {
@@ -13,7 +13,7 @@ class Documentation
         if ( File::exists($page = $this->markdownPath($version, $page)) ) {
             return $this->replaceLinks(
                 $version,
-                (new Parsedown)->text(File::get($page))
+                (new ParsedownExtra)->text(File::get($page))
             );
         }
         

@@ -11,7 +11,7 @@ class ReadDocumentationTest extends TestCase
     /** @test */
     public function it_assumes_the_latest_documentation_version()
     {
-        $this->get('/some-page')->assertRedirect('/docs/' . DEFAULT_VERSION . '/some-page');
+        $this->get('/some-page')->assertRedirect('/' . DEFAULT_VERSION . '/some-page');
     }
 
     /** @test */

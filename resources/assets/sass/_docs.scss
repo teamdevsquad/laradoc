@@ -1,0 +1,54 @@
+.docs-wrapper {
+    .sidebar {
+        border-right: 1px solid #f0f2f1;
+        width: 250px;
+        padding: 35px;
+        float: left;
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        h2 {
+            font-size: 14px;
+            font-weight: 400;
+            padding: .75rem .75rem .75rem 0;
+            margin: 0;
+            cursor: pointer;
+            transition: color .1s linear;
+            border-bottom: 1px dashed rgba(0, 0, 0, .1);
+            position: relative;
+            
+            &+ul {
+                display: none;
+            }
+            
+            &.is-active:after {
+                transform: rotate(90deg);
+            }
+
+            &:hover {
+                color: #3a76c1;
+            }
+
+            &:after {
+                content: "";
+                position: absolute;
+                right: 0;
+                top: 1rem;
+                width: 0;
+                height: 0;
+                border-color: rgba(0, 0, 0, .1);
+                border-top: 4px solid transparent;
+                border-right: 4px solid transparent;
+                border-left: 4px solid #dee0df;
+                border-bottom: 4px solid transparent;
+            }
+        }
+    }
+    article {
+        padding: 25px 125px 50px 50px;
+        margin-left: 300px;
+    }
+}

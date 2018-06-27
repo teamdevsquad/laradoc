@@ -1,12 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Docs</title>
-</head>
-<body>
-    {!! $content !!}
-</body>
-</html>
+@extends('layouts.docs')
+
+@section('sidebar')
+    <section class="sidebar">
+        <docs-menu></docs-menu>
+    </section>
+@endsection
+
+@section('content')
+    <article>
+        {!! $content !!}
+    </article>    
+@endsection
+ 
