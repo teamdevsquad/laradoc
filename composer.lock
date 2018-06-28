@@ -1,11 +1,54 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "20da44d6cad24fefab1eab83e7d41b20",
+    "content-hash": "bb9bc3466bb2d0020520ddd7aa61ef73",
     "packages": [
+        {
+            "name": "devsquad/extensions",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/teamdevsquad/laravel-extensions.git",
+                "reference": "74abb582485214aa26f9c5f22e418e0b4ff06e43"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/teamdevsquad/laravel-extensions/zipball/74abb582485214aa26f9c5f22e418e0b4ff06e43",
+                "reference": "74abb582485214aa26f9c5f22e418e0b4ff06e43",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "DevSquad\\Extensions\\DevSquadExtensionProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "DevSquad\\Extensions\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Team DevSquad",
+                    "email": "team@devsquad.com"
+                }
+            ],
+            "description": "Extension Classes for DevSquad Laravel projects",
+            "time": "2018-06-25T22:56:44+00:00"
+        },
         {
             "name": "dnoegel/php-xdg-base-dir",
             "version": "0.1",
@@ -4029,7 +4072,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "devsquad/extensions": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
