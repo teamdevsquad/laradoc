@@ -1,0 +1,159 @@
+version: '3'
+
+networks:
+  frontend:
+    driver: bridge
+  backend:
+    driver: bridge
+
+volumes:
+  postgres:
+    driver: local
+  adminer:
+    driver: local
+  redis:
+    driver: local
+
+services:
+
+    workspace:
+      restart: on-failure
+      container_name: ${APP_NAME}_workspace
+      domainname: workspace.${APP_NAME}.test
+      build:
+        context: ./config/workspace
+        args:
+          - PHP_VERSION=${PHP_VERSION}
+          - CHROME_DRIVER_VERSION=${CHROME_DRIVER_VERSION}
+          - NODE_VERSION=${NODE_VERSION}
+          - YARN_VERSION=${YARN_VERSION}
+          - GIT_USER_NAME=${GIT_USER_NAME}
+          - GIT_USER_EMAIL=${GIT_USER_EMAIL}
+          - TZ=UTC
+      volumes:
+        - ${CODE_FOLDER}:/var/www:cached
+        - ./config/workspace/custom:/opt/custom
+        - ./config/workspace/ssh:/home/devsquad/.ssh
+      extra_hosts:
+        - "dockerhost:${YOUR_IP_ADDRESS}"
+      tty: true
+      environment:
+        - PHP_IDE_CONFIG=serverName=devsquad-server
+      networks:
+        - frontend
+        - backend
+
+    php-fpm:
+      restart: on-failure
+      container_name: ${APP_NAME}_php-fpm
+      domainname: php-fpm.${APP_NAME}.test
+      build:
+        context: ./config/php-fpm
+        args:
+          - PHP_VERSION=7.2
+      volumes:
+        - ${CODE_FOLDER}:/var/www:cached
+      expose:
+        - "${XDEBUG_PORT}"
+      extra_hosts:
+        - "dockerhost:${YOUR_IP_ADDRESS}"
+      environment:
+        - PHP_IDE_CONFIG=serverName=devsquad-server
+      depends_on:
+        - workspace
+      networks:
+        - backend
+
+    php-worker:
+      restart: on-failure
+      container_name: ${APP_NAME}_php-worker
+      domainname: php-worker.${APP_NAME}.test
+      build:
+        context: ./config/php-worker
+        args:
+          - PHP_VERSION=7.2
+      volumes:
+        - ${CODE_FOLDER}:/var/www:cached
+        - ./config/php-worker/supervisord.d:/etc/supervisord.d
+      depends_on:
+        - workspace
+      extra_hosts:
+        - "dockerhost:${YOUR_IP_ADDRESS}"
+      networks:
+        - backend
+
+    nginx:
+      restart: on-failure
+      container_name: ${APP_NAME}_nginx
+      domainname: ${APP_NAME}.test
+      build:
+        context: ./config/nginx
+        args:
+          - PHP_UPSTREAM_CONTAINER=php-fpm
+          - PHP_UPSTREAM_PORT=9000
+      volumes:
+        - ${CODE_FOLDER}:/var/www:cached
+        - ./config/nginx/sites:/etc/nginx/sites-available
+        - ./store/nginx/logs:/var/log/nginx
+      ports:
+        - "${HTTP_PORT}:80"
+        - "${HTTPS_PORT}:443"
+      depends_on:
+        - php-fpm
+      networks:
+        - frontend
+        - backend
+
+    postgres:
+      restart: on-failure
+      container_name: ${APP_NAME}_postgres
+      domainname: postgres.${APP_NAME}.test
+      build: ./config/postgres
+      volumes:
+        - ./store/postgres:/var/lib/postgresql/data
+      ports:
+        - "${PGSQL_PORT}:5432"
+      environment:
+        - POSTGRES_DB=${DB_DATABASE}
+        - POSTGRES_USER=${DB_USERNAME}
+        - POSTGRES_PASSWORD=${DB_PASSWORD}
+      networks:
+        - backend
+
+    redis:
+      restart: on-failure
+      container_name: ${APP_NAME}_redis
+      domainname: redis.${APP_NAME}.test
+      build: ./config/redis
+      volumes:
+        - ./store/redis:/data
+      ports:
+        - "${REDIS_PORT}:6379"
+      networks:
+        - backend
+
+    adminer:
+      restart: on-failure
+      container_name: ${APP_NAME}_adminer
+      domainname: adminer.${APP_NAME}.test
+      build:
+        context: ./config/adminer
+      ports:
+        - "${ADMINER_PORT}:8080"
+      depends_on:
+        - php-fpm
+      networks:
+        - frontend
+        - backend
+
+    maildev:
+      restart: on-failure
+      container_name: ${APP_NAME}_maildev
+      domainname: maildev.${APP_NAME}.test
+      build: ./config/maildev
+      ports:
+        - "${MAILDEV_PORT}:80"
+        - "${SMTP_PORT}:25"
+      networks:
+        - frontend
+        - backend

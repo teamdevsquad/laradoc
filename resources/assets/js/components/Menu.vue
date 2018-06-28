@@ -31,6 +31,14 @@
                             { title: 'Teste', href: '/teste', isActive: this.page === 'teste' },
                         ],
                         isActive: ['introduction', 'teste'].indexOf(this.page) > -1 || false
+                    },
+                    {
+                        title: 'SubMenu 2',
+                        items: [
+                            { title: 'Introduction', href: '/sub2', isActive: this.page === 'sub2' },
+                            { title: 'Teste', href: '/sub3', isActive: this.page === 'sub3' },
+                        ],
+                        isActive: ['sub2', 'sub3'].indexOf(this.page) > -1 || false
                     }
                 ]
             }
