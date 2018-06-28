@@ -14,6 +14,7 @@ class DocumentationService
             $obj                = new Documentation();
             $obj->title         = $form->title;
             $obj->documentation = $form->documentation;
+            $obj->category_id   = $form->category_id;
             $obj->save();
             return $obj;
         });

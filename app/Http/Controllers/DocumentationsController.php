@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Services\DocumentationService;
 use App\Http\Requests\DocumentationRequest;
 use App\Models\Documentation;
+use App\Models\Category;
 
 class DocumentationsController extends Controller
 {
@@ -18,17 +19,20 @@ class DocumentationsController extends Controller
 
     public function index()
     {
-        //
+        $docs = Documentation::all();
+        return view('documentation.index', compact('docs'));
     }
 
     public function create()
     {
-        //
+        $categories = Category::all();
+        return view('documentation.create', compact('categories'));
     }
 
     public function store(DocumentationRequest $request)
     {
-        $this->service->create($request->form());    
+        $this->service->create($request->form());
+        return redirect()->route('docs.index');
     }
 
     public function show($id)
@@ -44,10 +48,12 @@ class DocumentationsController extends Controller
     public function update(DocumentationRequest $request, Documentation $doc)
     {
         $this->service->update($request->form(), $doc);
+        return redirect()->route('docs.index');
     }
 
     public function destroy(Documentation $doc)
     {
         $this->service->delete($doc);
+        return redirect()->route('docs.index');
     }
 }

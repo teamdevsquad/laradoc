@@ -20,7 +20,7 @@ class DocumentationRequest extends BaseRequest
     public function rules()
     {
         return [
-            'title'         => 'required',
+            'title'         => 'required|unique:documentations|max:255',
             'documentation' => 'required'
         ];
     }

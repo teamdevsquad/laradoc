@@ -3,8 +3,10 @@
 use Faker\Generator as Faker;
 
 $factory->define(App\Models\Documentation::class, function (Faker $faker) {
+    $title = $faker->word;
     return [
-        'title'         => $faker->word,
-        'documentation' => $faker->text
+        'title'         => $title,
+        'documentation' => $faker->text,
+        'slug'          => str_slug($title)
     ];
 });
