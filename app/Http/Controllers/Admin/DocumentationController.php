@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Services\DocumentationService;
 use App\Http\Requests\DocumentationRequest;
 use App\Models\Documentation;
 use App\Models\Category;
+use App\Http\Controllers\Controller;
 
-class DocumentationsController extends Controller
+class DocumentationController extends Controller
 {
     private $service;
 
@@ -19,8 +20,8 @@ class DocumentationsController extends Controller
 
     public function index()
     {
-        $docs = Documentation::all();
-        return view('documentation.index', compact('docs'));
+        $docs = Documentation::search( request('search') )->paginate( 15 );
+        return view( 'documentation.index', compact( 'docs' ) );
     }
 
     public function create()

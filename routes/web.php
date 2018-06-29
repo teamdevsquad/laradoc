@@ -9,7 +9,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::prefix('admin')->middleware(['auth'])->group(function () {
-    Route::resource('docs', 'DocumentationsController');
+    Route::resource('docs', 'Admin\DocumentationController');
 });
 
 Route::get('/', function () {

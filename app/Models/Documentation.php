@@ -24,4 +24,12 @@ class Documentation extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+    public function scopeSearch($query, $search)
+    {
+        if (!$search)
+            return $query;
+
+        return $query->where('title', 'like', $search);
+    }
 }
