@@ -5,9 +5,12 @@ namespace Tests\Feature;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mockery;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class ReadDocumentationTest extends TestCase
 {
+    use DatabaseMigrations;
+
     /** @test */
     public function it_assumes_the_latest_documentation_version()
     {
@@ -17,11 +20,14 @@ class ReadDocumentationTest extends TestCase
     /** @test */
     public function it_loads_and_parsees_a_markdown_documentation_pages()
     {
-        app()->instance('App\Documentation', Mockery::mock('App\Documentation[markdownPath]', function ($mock) {
-            $mock->shouldReceive('markdownPath')->once()->andReturn(
-                base_path('tests/helpers/stubs/docs/1.0/stub.md')
-            );
-        }));
+        factory(\App\Models\Documentation::class)
+            ->create([
+                'title'         => 'Stub',
+                'version'       => DEFAULT_VERSION,
+                'documentation' => '# Stub
+
+Paragraph'
+            ]);
 
         $this->get('/'.DEFAULT_VERSION.'/stub')
             ->assertSee('<h1>Stub</h1>')

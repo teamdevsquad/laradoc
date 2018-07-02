@@ -5,24 +5,21 @@ namespace App;
 use File;
 use ParsedownExtra;
 use App\Exceptions\DocumentationException;
+use App\Models\Documentation as Doc;
 
 class Documentation
 {
     public function get($version, $page)
     {
-        if ( File::exists($page = $this->markdownPath($version, $page)) ) {
+        $doc = Doc::where('slug', $page)->where('version', $version)->first();
+        if ( $doc ) {
             return $this->replaceLinks(
                 $version,
-                (new ParsedownExtra)->text(File::get($page))
+                (new ParsedownExtra)->text($doc->documentation)
             );
         }
         
         throw new DocumentationException('The requested documentation page was not found');
-    }
-
-    public function markdownPath($version, $page)
-    {
-        return resource_path('docs/'.$version.'/'.$page.'.md');
     }
 
     public static function versions()

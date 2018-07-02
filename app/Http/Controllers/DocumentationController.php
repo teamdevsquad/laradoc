@@ -17,7 +17,8 @@ class DocumentationController extends Controller
         try {
             return view('docs', [
                 'content' => Documentation::get($version, $page),
-                'page'    => $page
+                'page'    => $page,
+                'version' => $version
             ]);
         } catch (DocumentationException $e) {
             abort(404, 'The documentation page was not found!');
