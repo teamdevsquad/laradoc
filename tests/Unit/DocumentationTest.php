@@ -5,21 +5,20 @@ namespace Tests\Unit;
 use File;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class DocumentationTest extends TestCase
 {
+    use DatabaseMigrations;
+
     /** @test */
     public function it_gets_the_documentation_page_for_a_given_version()
     {
-        File::shouldReceive('exists')
-            ->once()
-            ->with(resource_path('docs/1.0/example.md'))
-            ->andReturn(true);
-            
-        File::shouldReceive('get')
-            ->once()
-            ->with(resource_path('docs/1.0/example.md'))
-            ->andReturn('# Example Page for {{version}}');
+        factory(\App\Models\Documentation::class)
+            ->create([
+                'title'         => 'Example',
+                'documentation' => '# Example Page for 1.0'
+            ]);
             
         $content = (new \App\Documentation)->get('1.0', 'example');
         
@@ -29,16 +28,12 @@ class DocumentationTest extends TestCase
     /** @test */
     public function it_parses_with_a_class_included()
     {
-        File::shouldReceive('exists')
-            ->once()
-            ->with(resource_path('docs/1.0/example.md'))
-            ->andReturn(true);
-            
-        File::shouldReceive('get')
-            ->once()
-            ->with(resource_path('docs/1.0/example.md'))
-            ->andReturn('# Example Page for {{version}} {.sth}');
-            
+        factory(\App\Models\Documentation::class)
+            ->create([
+                'title'         => 'Example',
+                'documentation' => '# Example Page for {{version}} {.sth}'
+            ]);
+
         $content = (new \App\Documentation)->get('1.0', 'example');
         
         $this->assertEquals('<h1 class="sth">Example Page for 1.0</h1>', $content);

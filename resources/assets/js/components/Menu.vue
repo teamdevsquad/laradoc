@@ -18,34 +18,27 @@
 <script>
     export default {
         props: {
-            page: {required: false, type: String, default: ''}
+            page   : {required: false, type: String, default: ''},
+            version: {required: false, type: String, default: ''},
         },
 
         data() {
             return {
-                menu: [
-                    {
-                        title: 'Getting Started',
-                        items: [
-                            { title: 'Introduction', href: '/introduction', isActive: this.page === 'introduction' },
-                            { title: 'Teste', href: '/teste', isActive: this.page === 'teste' },
-                        ],
-                        isActive: ['introduction', 'teste'].indexOf(this.page) > -1 || false
-                    },
-                    {
-                        title: 'SubMenu 2',
-                        items: [
-                            { title: 'Introduction', href: '/sub2', isActive: this.page === 'sub2' },
-                            { title: 'Teste', href: '/sub3', isActive: this.page === 'sub3' },
-                        ],
-                        isActive: ['sub2', 'sub3'].indexOf(this.page) > -1 || false
-                    }
-                ]
+                oMenu: [],
+                menu: []
             }
         },
 
+        async created() {
+            await this.getMenu();
+        },
 
         methods: {
+            async getMenu() {
+                const res = await axios.get('/menu/' + this.version + '/' + this.page);
+                this.menu = res.data;
+            },
+
             goTo(href) {
                 window.location = href;
             }

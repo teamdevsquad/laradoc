@@ -5,10 +5,11 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">New Documentation</div>
+                <div class="card-header">Edit Documentation | {{ $doc->name }} </div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('docs.store') }}" aria-label="New Documentation">
+                    <form method="POST" action="{{ route('docs.update', [ 'id' => $doc->id ]) }}" aria-label="Update Documentation">
+                        {{ method_field('PUT') }}
                         @csrf
                         
                         <div class="form-group row">
@@ -18,7 +19,7 @@
                                 <select name="category_id" id="category_id" class="form-control{{ $errors->has('category') ? ' is-invalid' : '' }}" >
                                     @foreach ($categories as $item)
                                         <option value="{{ $item->id }}" 
-                                            {{ $item->id == old('category_id') ? 'selected' : '' }} 
+                                            {{ $item->id == old('category_id') || $doc->category_id ? 'selected' : '' }} 
                                         >
                                             {{ $item->text }}
                                         </option>
@@ -37,7 +38,7 @@
 
                             <div class="col-md-6">
                                 <input id="version" type="text" class="form-control{{ $errors->has('version') ? ' is-invalid' : '' }}" 
-                                    name="version" value="{{ old('version') }}"  autofocus>
+                                    name="version" value="{{ old('version') ?: $doc->version }}"  autofocus>
 
                                 @if ($errors->has('version'))
                                     <span class="invalid-feedback" role="alert">
@@ -52,7 +53,7 @@
 
                             <div class="col-md-6">
                                 <input id="title" type="text" class="form-control{{ $errors->has('title') ? ' is-invalid' : '' }}" 
-                                    name="title" value="{{ old('title') }}"  autofocus>
+                                    name="title" value="{{ old('title') ?: $doc->title }}"  autofocus>
 
                                 @if ($errors->has('title'))
                                     <span class="invalid-feedback" role="alert">
@@ -67,7 +68,7 @@
 
                             <div class="col-md-6">
                                 <textarea id="documentation" class="form-control{{ $errors->has('documentation') ? ' is-invalid' : '' }}" 
-                                    name="documentation" rows="10" ></textarea>
+                                name="documentation" rows="10" >{{ old('documentation') ?: $doc->documentation }}</textarea>
 
                                 @if ($errors->has('documentation'))
                                     <span class="invalid-feedback" role="alert">
@@ -82,7 +83,7 @@
                                     Save
                                 </button>
 
-                                <a class="btn btn-link" href="{{ route('docs.index') }}">
+                                <a class="btn btn-link" href="{{ route('categories.index') }}">
                                     Back
                                 </a>
                             </div>

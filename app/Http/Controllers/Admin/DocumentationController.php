@@ -41,9 +41,10 @@ class DocumentationController extends Controller
         //
     }
 
-    public function edit($id)
+    public function edit(Documentation $doc)
     {
-        //
+        $categories = Category::all();
+        return view('documentation.edit', compact('doc', 'categories'));
     }
 
     public function update(DocumentationRequest $request, Documentation $doc)

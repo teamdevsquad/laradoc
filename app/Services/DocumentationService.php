@@ -14,6 +14,7 @@ class DocumentationService
             $obj                = new Documentation();
             $obj->title         = $form->title;
             $obj->documentation = $form->documentation;
+            $obj->version       = $form->version;
             $obj->category_id   = $form->category_id;
             $obj->save();
             return $obj;
@@ -25,6 +26,7 @@ class DocumentationService
         return DB::transaction(function () use ($form, $obj) {
             $obj->title         = $form->title;
             $obj->documentation = $form->documentation;
+            $obj->version       = $form->version;
             $obj->save();
             return $obj;
         });

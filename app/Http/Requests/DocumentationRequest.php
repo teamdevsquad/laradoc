@@ -21,7 +21,8 @@ class DocumentationRequest extends BaseRequest
     {
         return [
             'title'         => 'required|unique:documentations|max:255',
-            'documentation' => 'required'
+            'documentation' => 'required',
+            'version'       => 'required'
         ];
     }
 }

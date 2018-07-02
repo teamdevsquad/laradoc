@@ -28,6 +28,7 @@
                 <table class="table table-striped table-hover">
                     <thead>
                         <tr>
+                            <th>Version</th>
                             <th>Category</th>
                             <th>Title</th>
                             <th>Actions</th>
@@ -36,7 +37,8 @@
                     <tbody>
                         @foreach ($docs as $doc)
                             <tr>
-                                <td>{{ optional($doc->category)->name }}</td>
+                                <td>{{ $doc->version }}</td>
+                                <td>{{ optional($doc->category)->text }}</td>
                                 <td>{{ $doc->title }}</td>
                                 <td style="white-space: nowrap;" width="10%">
                                     <a href="/admin/docs/{{ $doc->id }}/edit" class="btn btn-secondary btn-sm mr-2 float-left">

@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Documentation extends Model
 {
-
     protected static function boot()
     {
         parent::boot();
@@ -30,6 +29,6 @@ class Documentation extends Model
         if (!$search)
             return $query;
 
-        return $query->where('title', 'like', $search);
+        return $query->where('title', 'like', str_replace('*', '%', $search));
     }
 }

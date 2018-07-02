@@ -27,12 +27,12 @@ class DocumentationsControllerTest extends TestCase
     /** @test */
     public function store()
     {
-        $this->withExceptionHandling();
         $user     = factory(\App\Models\User::class)->create();
         $category = factory(Category::class)->create();
         $data     = [
             'title'         => 'Title',
             'category_id'   => $category->id,
+            'version'       => '1.0',
             'documentation' => '# Header\n\nLorem ipsum'
         ];
 
@@ -42,6 +42,7 @@ class DocumentationsControllerTest extends TestCase
         $this->assertDatabaseHas('documentations', [
             'title'         => 'Title',
             'category_id'   => $category->id,
+            'slug'          => str_slug('Title'),
             'slug'          => str_slug('Title'),
             'documentation' => '# Header\n\nLorem ipsum'
         ]);
@@ -89,7 +90,6 @@ class DocumentationsControllerTest extends TestCase
     /** @test */
     public function destroy()
     {
-        $this->withoutExceptionHandling();
         $user = factory(\App\Models\User::class)->create();
         $doc  = factory(\App\Models\Documentation::class)->create();
 

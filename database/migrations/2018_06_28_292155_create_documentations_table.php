@@ -12,6 +12,7 @@ class CreateDocumentationsTable extends Migration
             $table->increments('id');
             $table->string('slug');
             $table->string('title');
+            $table->string('version');
             $table->text('documentation');
             $table->unsignedInteger('category_id')->nullable();
             $table->foreign('category_id')
